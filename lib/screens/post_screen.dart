@@ -49,6 +49,7 @@ class PostScreen extends StatelessWidget {
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () async {
+                          // print('sssss');
                           final bool? confirm = await showConfirmationDialog(
                             context,
                             'Do you want to delete this post?',
