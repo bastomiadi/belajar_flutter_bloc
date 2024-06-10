@@ -5,7 +5,7 @@ import '../models/post.dart';
 class PostDetailScreen extends StatelessWidget {
   final Post post;
 
-  PostDetailScreen({required this.post});
+  const PostDetailScreen({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {

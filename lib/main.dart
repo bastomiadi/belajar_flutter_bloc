@@ -14,6 +14,8 @@ void main() {
 class MyApp extends StatelessWidget {
   final PostRepository postRepository = PostRepository();
 
+  MyApp({super.key});
+
   // @override
   // Widget build(BuildContext context) {
   //   return MaterialApp(
@@ -38,13 +40,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MainScreen(),
+        home: const MainScreen(),
       ),
     );
   }
 }
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -54,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    SettingsScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

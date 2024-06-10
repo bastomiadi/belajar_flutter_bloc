@@ -10,7 +10,7 @@ import '../utils/dialog.dart';
 class PostFormScreen extends StatefulWidget {
   final Post? post;
 
-  PostFormScreen({this.post});
+  const PostFormScreen({super.key, this.post});
 
   @override
   _PostFormScreenState createState() => _PostFormScreenState();
