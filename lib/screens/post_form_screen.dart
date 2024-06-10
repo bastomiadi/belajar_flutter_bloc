@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // import 'package:intl/intl.dart'; // For date formatting
+import '../bloc/datepicker_bloc.dart';
+import '../bloc/datepicker_event.dart';
+import '../bloc/datepicker_state.dart';
 import '../bloc/post_bloc.dart';
 import '../bloc/post_event.dart';
 import '../bloc/post_state.dart';
@@ -13,7 +17,7 @@ class PostFormScreen extends StatefulWidget {
   const PostFormScreen({super.key, this.post});
 
   @override
-  _PostFormScreenState createState() => _PostFormScreenState();
+  State<PostFormScreen> createState() => _PostFormScreenState();
 }
 
 class _PostFormScreenState extends State<PostFormScreen> {
@@ -23,6 +27,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
   late DateTime _date;
   late String _status;
   bool _isSubmitting = false;
+  // final TextEditingController _dateController = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +42,9 @@ class _PostFormScreenState extends State<PostFormScreen> {
     if (_formKey.currentState!.validate()) {
       final bool? confirm = await showConfirmationDialog(
         context,
-        widget.post == null ? 'Do you want to create this post?' : 'Do you want to update this post?',
+        widget.post == null
+            ? 'Do you want to create this post?'
+            : 'Do you want to update this post?',
       );
 
       if (confirm == true) {
@@ -56,6 +63,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
             // date: _date,
             // status: _status,
           );
+          if (!mounted) return;
           context.read<PostBloc>().add(CreatePost(newPost));
         } else {
           // Update the existing post
@@ -66,6 +74,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
             // date: _date,
             // status: _status,
           );
+          if (!mounted) return;
           context.read<PostBloc>().add(UpdatePost(updatedPost));
         }
       }
@@ -104,7 +113,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
               _isSubmitting = false;
             });
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to submit post: ${state.message}')),
+              SnackBar(
+                  content: Text('Failed to submit post: ${state.message}')),
             );
           }
         },
@@ -175,14 +185,14 @@ class _PostFormScreenState extends State<PostFormScreen> {
                   onPressed: _isSubmitting ? null : _submitForm,
                   child: _isSubmitting
                       ? const SizedBox(
-                    height: 16,
-                    width: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.0,
-                      valueColor:
-                      AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2.0,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        )
                       : Text(widget.post == null ? 'Create' : 'Update'),
                 ),
               ],

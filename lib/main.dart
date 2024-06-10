@@ -1,4 +1,7 @@
 // lib/main.dart
+import 'package:belajar_flutter_bloc/bloc/datepicker_bloc.dart';
+import 'package:belajar_flutter_bloc/bloc/datepicker_event.dart';
+import 'package:belajar_flutter_bloc/bloc/status_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/post_bloc.dart';
@@ -34,6 +37,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<PostBloc>(
           create: (context) => PostBloc(postRepository)..add(FetchPosts()),
         ),
+        BlocProvider<DatePickerBloc>(
+          create: (context) => DatePickerBloc(),
+        ),
+        // BlocProvider<StatusBloc>(
+        //   create: (context) => StatusBloc(),
+        // ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -50,14 +59,14 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+    const HomeScreen(),
     const SettingsScreen(),
   ];
 
