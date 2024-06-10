@@ -29,7 +29,7 @@ class PostScreen extends StatelessWidget {
                 final post = state.posts[index];
                 return ListTile(
                   title: Text(post.title),
-                  subtitle: Text(post.body),
+                  // subtitle: Text(post.body),
                   onTap: () {
                     Navigator.push(
                       context,
