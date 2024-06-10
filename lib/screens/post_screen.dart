@@ -5,9 +5,12 @@ import '../bloc/post_bloc.dart';
 import '../bloc/post_event.dart';
 import '../bloc/post_state.dart';
 import '../utils/dialog.dart';
+import '../widgets/shimmer_post_list.dart';
 import 'post_form_screen.dart';
 
 class PostScreen extends StatelessWidget {
+  const PostScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,8 @@ class PostScreen extends StatelessWidget {
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           if (state is PostLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return ShimmerPostList();
+            // return const Center(child: CircularProgressIndicator());
           } else if (state is PostLoaded) {
             return ListView.builder(
               itemCount: state.posts.length,
@@ -55,6 +59,7 @@ class PostScreen extends StatelessWidget {
                             'Do you want to delete this post?',
                           );
                           if (confirm == true) {
+                            if (!context.mounted) return;
                             context.read<PostBloc>().add(DeletePost(post.id));
                           }
                         },
