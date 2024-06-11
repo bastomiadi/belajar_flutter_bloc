@@ -13,16 +13,16 @@
 // }
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'status_event.dart';
 import 'status_state.dart';
 
-class StatusBloc extends Bloc<StatusEvent, StatusState> {
-  StatusBloc() : super(const StatusState()) {
-    on<StatusSelected>(_onStatusSelected);
+class DropdownBloc extends Bloc<DropdownEvent, DropdownState> {
+  DropdownBloc() : super(DropdownInitial()) {
+    // Register the event handler
+    on<DropdownItemSelected>(_onDropdownItemSelected);
   }
 
-  void _onStatusSelected(StatusSelected event, Emitter<StatusState> emit) {
-    emit(StatusState(selectedStatus: event.selectedStatus));
+  void _onDropdownItemSelected(DropdownItemSelected event, Emitter<DropdownState> emit) {
+    emit(DropdownItemSelectedState(event.selectedItem));
   }
 }

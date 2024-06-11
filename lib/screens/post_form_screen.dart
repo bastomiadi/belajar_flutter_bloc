@@ -9,6 +9,9 @@ import '../bloc/datepicker_state.dart';
 import '../bloc/post_bloc.dart';
 import '../bloc/post_event.dart';
 import '../bloc/post_state.dart';
+import '../bloc/status_bloc.dart';
+import '../bloc/status_event.dart';
+import '../bloc/status_state.dart';
 import '../models/post.dart';
 import '../utils/dialog.dart';
 
@@ -28,6 +31,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
   late DateTime _date;
   late String _status;
   bool _isSubmitting = false;
+
   // final TextEditingController _dateController = TextEditingController();
 
   @override
@@ -82,19 +86,19 @@ class _PostFormScreenState extends State<PostFormScreen> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != _date) {
-      setState(() {
-        _date = picked;
-      });
-    }
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: _date,
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null && picked != _date) {
+  //     setState(() {
+  //       _date = picked;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,9 +135,10 @@ class _PostFormScreenState extends State<PostFormScreen> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: TextEditingController(
-                        text: DateFormat('yyyy-MM-dd').format(state.selectedDate),
+                        text:
+                            DateFormat('yyyy-MM-dd').format(state.selectedDate),
                       ),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Selected Date',
                         suffixIcon: Icon(Icons.calendar_today),
                       ),
@@ -179,35 +184,34 @@ class _PostFormScreenState extends State<PostFormScreen> {
                   },
                 ),
                 // SizedBox(height: 16.0),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: Text(
-                //         'Date: ${DateFormat.yMd().format(_date)}',
-                //       ),
-                //     ),
-                //     ElevatedButton(
-                //       onPressed: () => _selectDate(context),
-                //       child: Text('Select date'),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 16.0),
-                // DropdownButtonFormField<String>(
-                //   value: _status,
-                //   items: ['Pending', 'Completed']
-                //       .map((status) => DropdownMenuItem(
-                //     value: status,
-                //     child: Text(status),
-                //   ))
-                //       .toList(),
-                //   onChanged: (value) {
-                //     setState(() {
-                //       _status = value!;
-                //     });
-                //   },
-                //   decoration: InputDecoration(labelText: 'Status'),
-                // ),
+                BlocBuilder<DropdownBloc, DropdownState>(
+                  builder: (context, state) {
+                    String? selectedValue;
+                    if (state is DropdownItemSelectedState) {
+                      selectedValue = state.selectedItem;
+                    }
+                    return DropdownButtonFormField<String>(
+                      value: selectedValue,
+                      hint: const Text('Select an item'),
+                      items: ['Item 1', 'Item 2', 'Item 3']
+                          .map((item) => DropdownMenuItem(
+                                value: item,
+                                child: Text(item),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          context
+                              .read<DropdownBloc>()
+                              .add(DropdownItemSelected(value));
+                        }
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: _isSubmitting ? null : _submitForm,

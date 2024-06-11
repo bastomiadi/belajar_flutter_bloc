@@ -5,16 +5,15 @@
 
 import 'package:equatable/equatable.dart';
 
-abstract class StatusEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
+abstract class DropdownEvent extends Equatable {
+  const DropdownEvent();
 }
 
-class StatusSelected extends StatusEvent {
-  final String selectedStatus;
+class DropdownItemSelected extends DropdownEvent {
+  final String selectedItem;
 
-  StatusSelected(this.selectedStatus);
+  const DropdownItemSelected(this.selectedItem);
 
   @override
-  List<Object?> get props => [selectedStatus];
+  List<Object> get props => [selectedItem];
 }

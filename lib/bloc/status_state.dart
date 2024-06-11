@@ -7,11 +7,20 @@
 
 import 'package:equatable/equatable.dart';
 
-class StatusState extends Equatable {
-  final String? selectedStatus;
+abstract class DropdownState extends Equatable {
+  const DropdownState();
+}
 
-  const StatusState({this.selectedStatus});
+class DropdownInitial extends DropdownState {
+  @override
+  List<Object> get props => [];
+}
+
+class DropdownItemSelectedState extends DropdownState {
+  final String selectedItem;
+
+  const DropdownItemSelectedState(this.selectedItem);
 
   @override
-  List<Object?> get props => [selectedStatus ?? ''];
+  List<Object> get props => [selectedItem];
 }

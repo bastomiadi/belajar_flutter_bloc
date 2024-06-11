@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<DatePickerBloc>(
           create: (context) => DatePickerBloc(),
         ),
-        // BlocProvider<StatusBloc>(
-        //   create: (context) => StatusBloc(),
-        // ),
+        BlocProvider<DropdownBloc>(
+          create: (context) => DropdownBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
