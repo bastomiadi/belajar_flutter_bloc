@@ -10,7 +10,7 @@ import 'package:equatable/equatable.dart';
 class StatusState extends Equatable {
   final String? selectedStatus;
 
-  StatusState({this.selectedStatus});
+  const StatusState({this.selectedStatus});
 
   @override
   List<Object?> get props => [selectedStatus ?? ''];

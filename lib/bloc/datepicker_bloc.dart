@@ -18,9 +18,12 @@ import 'datepicker_event.dart';
 import 'datepicker_state.dart';
 
 class DatePickerBloc extends Bloc<DatePickerEvent, DatePickerState> {
-  DatePickerBloc() : super(DatePickerInitial(DateTime.now())) {
-    on<SelectDate>((event, emit) {
-      emit(DatePickerSelected(event.selectedDate));
+  DatePickerBloc() : super(DatePickerState(selectedDate: DateTime.now())) {
+    on<DateChanged>((event, emit) {
+      emit(DatePickerState(selectedDate: event.date));
     });
   }
 }
+
+
+

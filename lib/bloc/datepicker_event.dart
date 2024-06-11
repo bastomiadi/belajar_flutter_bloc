@@ -6,8 +6,9 @@
 // datepicker_event.dart
 abstract class DatePickerEvent {}
 
-class SelectDate extends DatePickerEvent {
-  final DateTime selectedDate;
+class DateChanged extends DatePickerEvent {
+  final DateTime date;
 
-  SelectDate(this.selectedDate);
+  DateChanged(this.date);
 }
+

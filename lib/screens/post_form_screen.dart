@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 // import 'package:intl/intl.dart'; // For date formatting
 import '../bloc/datepicker_bloc.dart';
@@ -97,6 +98,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _bloc = context.read<DatePickerBloc>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.post == null ? 'Create Post' : 'Update Post'),
@@ -124,6 +127,31 @@ class _PostFormScreenState extends State<PostFormScreen> {
             key: _formKey,
             child: Column(
               children: [
+                BlocBuilder<DatePickerBloc, DatePickerState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      controller: TextEditingController(
+                        text: DateFormat('yyyy-MM-dd').format(state.selectedDate),
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Selected Date',
+                        suffixIcon: Icon(Icons.calendar_today),
+                      ),
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? picked = await showDatePicker(
+                          context: context,
+                          initialDate: state.selectedDate,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+                        if (picked != null && picked != state.selectedDate) {
+                          _bloc.add(DateChanged(picked));
+                        }
+                      },
+                    );
+                  },
+                ),
                 TextFormField(
                   initialValue: _title,
                   decoration: const InputDecoration(labelText: 'Title'),

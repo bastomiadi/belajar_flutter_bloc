@@ -18,7 +18,7 @@ import 'status_event.dart';
 import 'status_state.dart';
 
 class StatusBloc extends Bloc<StatusEvent, StatusState> {
-  StatusBloc() : super(StatusState()) {
+  StatusBloc() : super(const StatusState()) {
     on<StatusSelected>(_onStatusSelected);
   }
 

@@ -6,16 +6,9 @@
 // final class DatepickerInitial extends DatepickerState {}
 
 // datepicker_state.dart
-abstract class DatePickerState {}
-
-class DatePickerInitial extends DatePickerState {
-  final DateTime initialDate;
-
-  DatePickerInitial(this.initialDate);
-}
-
-class DatePickerSelected extends DatePickerState {
+class DatePickerState {
   final DateTime selectedDate;
 
-  DatePickerSelected(this.selectedDate);
+  DatePickerState({required this.selectedDate});
 }
+
