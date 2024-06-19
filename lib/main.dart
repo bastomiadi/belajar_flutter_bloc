@@ -1,11 +1,10 @@
 // lib/main.dart
-import 'package:belajar_flutter_bloc/bloc/datepicker_bloc.dart';
-import 'package:belajar_flutter_bloc/bloc/datepicker_event.dart';
-import 'package:belajar_flutter_bloc/bloc/status_bloc.dart';
+import 'package:belajar_flutter_bloc/bloc/datepicker/datepicker_bloc.dart';
+import 'package:belajar_flutter_bloc/bloc/post/post_event.dart';
+import 'package:belajar_flutter_bloc/bloc/status/status_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/post_bloc.dart';
-import 'bloc/post_event.dart';
+import 'bloc/post/post_bloc.dart';
 import 'repository/post_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/settings_screen.dart';

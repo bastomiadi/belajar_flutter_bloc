@@ -1,17 +1,17 @@
+import 'package:belajar_flutter_bloc/bloc/post/post_event.dart';
+import 'package:belajar_flutter_bloc/bloc/status/status_event.dart';
+import 'package:belajar_flutter_bloc/bloc/status/status_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 // import 'package:intl/intl.dart'; // For date formatting
-import '../bloc/datepicker_bloc.dart';
-import '../bloc/datepicker_event.dart';
-import '../bloc/datepicker_state.dart';
-import '../bloc/post_bloc.dart';
-import '../bloc/post_event.dart';
-import '../bloc/post_state.dart';
-import '../bloc/status_bloc.dart';
-import '../bloc/status_event.dart';
-import '../bloc/status_state.dart';
+import '../bloc/datepicker/datepicker_bloc.dart';
+import '../bloc/datepicker/datepicker_event.dart';
+import '../bloc/datepicker/datepicker_state.dart';
+import '../bloc/post/post_bloc.dart';
+import '../bloc/post/post_state.dart';
+import '../bloc/status/status_bloc.dart';
 import '../models/post.dart';
 import '../utils/dialog.dart';
 
@@ -39,7 +39,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
     super.initState();
     _title = widget.post?.title ?? '';
     _body = widget.post?.body ?? '';
-    // _date = widget.post?.date ?? DateTime.now();
+    // _date = widget.post!.date;
     // _status = widget.post?.status ?? 'Pending';
   }
 
@@ -66,7 +66,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
             title: _title,
             body: _body,
             // date: _date,
-            // status: _status,
+            //status: _status,
           );
           if (!mounted) return;
           context.read<PostBloc>().add(CreatePost(newPost));
@@ -77,7 +77,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
             title: _title,
             body: _body,
             // date: _date,
-            // status: _status,
+            //.status: _status,
           );
           if (!mounted) return;
           context.read<PostBloc>().add(UpdatePost(updatedPost));
@@ -85,20 +85,6 @@ class _PostFormScreenState extends State<PostFormScreen> {
       }
     }
   }
-
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: _date,
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime(2101),
-  //   );
-  //   if (picked != null && picked != _date) {
-  //     setState(() {
-  //       _date = picked;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -154,9 +140,19 @@ class _PostFormScreenState extends State<PostFormScreen> {
                           _bloc.add(DateChanged(picked));
                         }
                       },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a date';
+                        }
+                        return null;
+                      },
+                      // onSaved: (value) {
+                      //   _date = DateTime.now();
+                      // },
                     );
                   },
                 ),
+                const SizedBox(height: 16.0),
                 TextFormField(
                   initialValue: _title,
                   decoration: const InputDecoration(labelText: 'Title'),
@@ -170,6 +166,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
                     _title = value!;
                   },
                 ),
+                const SizedBox(height: 16.0),
                 TextFormField(
                   initialValue: _body,
                   decoration: const InputDecoration(labelText: 'Body'),
@@ -183,7 +180,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
                     _body = value!;
                   },
                 ),
-                // SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 BlocBuilder<DropdownBloc, DropdownState>(
                   builder: (context, state) {
                     String? selectedValue;
@@ -209,6 +206,15 @@ class _PostFormScreenState extends State<PostFormScreen> {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select an item';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _status = value!;
+                      },
                     );
                   },
                 ),

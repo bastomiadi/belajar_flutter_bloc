@@ -13,7 +13,7 @@
 // }
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../repository/post_repository.dart';
+import '../../repository/post_repository.dart';
 import 'post_event.dart';
 import 'post_state.dart';
 

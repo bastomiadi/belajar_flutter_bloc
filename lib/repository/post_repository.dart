@@ -30,6 +30,7 @@ class PostRepository {
   }
 
   Future<Post> updatePost(Post post) async {
+    print(json.encode(post.toJson()));
     final response = await http.put(
       Uri.parse('$baseUrl/${post.id}'),
       headers: {'Content-type': 'application/json; charset=UTF-8',},

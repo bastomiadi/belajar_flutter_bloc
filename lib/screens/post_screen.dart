@@ -1,9 +1,9 @@
 // lib/screens/post_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/post_bloc.dart';
-import '../bloc/post_event.dart';
-import '../bloc/post_state.dart';
+import '../bloc/post/post_bloc.dart';
+import '../bloc/post/post_event.dart';
+import '../bloc/post/post_state.dart';
 import '../utils/dialog.dart';
 import '../widgets/shimmer_post_list.dart';
 import 'post_detail_screen.dart';

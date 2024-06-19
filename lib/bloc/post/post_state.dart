@@ -7,7 +7,7 @@
 
 // lib/bloc/post_state.dart
 import 'package:equatable/equatable.dart';
-import '../models/post.dart';
+import '../../models/post.dart';
 abstract class PostState extends Equatable {
   const PostState();
 }
